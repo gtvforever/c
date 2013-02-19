@@ -3,7 +3,7 @@
 static char name[] = "cisco is an great company!";
 
 
-char* reverse_stringerse_string(char* p)
+void reverse_stringerse_string(char* p)
 {
 	int len;
 	int i;
