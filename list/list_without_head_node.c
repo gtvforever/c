@@ -63,10 +63,12 @@ static void add_node_to_head(struct ListNode** head, ListType value)
 static void add_node_to_tail(struct ListNode** head, ListType value)
 {
     struct ListNode* p = *head;
-    struct ListNode* q;
     struct ListNode* new;
     
     new = (struct ListNode*)malloc(sizeof(struct ListNode));
+    if (new == NULL) {
+        printf("malloc failed\n");
+    }
     new->data = value;
     new->next = NULL;
     
@@ -76,11 +78,10 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
     }
     else
     {
-        while (p) {
-            q = p;
+        while (p->next != NULL) {
             p = p->next;
         }
-        q->next = new;
+        p->next = new;
     }
     
     return;
@@ -168,6 +169,165 @@ static void reverse_print_list(struct ListNode* head)
     
 }
 
+static void set_list_into_circle(struct ListNode* head, unsigned int count)
+{
+    
+    struct ListNode* start;
+    struct ListNode* end;
+    if (head == NULL || head->next == NULL) {
+        return;
+    }
+    
+    start = head;
+    count -= 1; //because we count postion from 1 instead of zero
+    while (start != NULL && count > 0) {
+        count--;
+        start = start->next;
+    }
+    if (start != NULL && count == 0) {
+        end = start;
+        
+        while(end->next != NULL) {
+            end = end->next;
+        }
+        end->next = start;
+    }
+    else
+    {
+        printf("Invalid input parameter\n");
+    }
+    return;
+}
+
+
+int list_have_circle(struct ListNode* head)
+{
+    struct ListNode* fast, *slow;
+    
+    if (head == NULL || head->next == NULL) {
+        return -1;
+    }
+    
+    fast = head->next->next;
+    slow = head;
+    
+    while (slow != fast) {
+        fast = fast->next;
+        if (fast->next) {
+            fast = fast->next;
+        }
+        else
+        {
+            return 0;
+        }
+        slow = slow->next;
+    }
+    
+    return 1;
+}
+
+
+
+//get inner circle length
+unsigned int get_circlr_length(struct ListNode* head)
+{
+    struct ListNode* fast, *slow;
+    unsigned int len;
+    if (head == NULL || head->next == NULL) {
+        return 0;
+    }
+    
+    
+    for (fast = slow = head; fast != NULL; fast = fast->next, slow = slow->next) {
+        fast = fast->next;
+        if (fast == NULL || fast == slow) {
+            break;
+        }
+    }
+    if (fast == NULL) {
+        return 0;
+    }
+    
+    for (len = 1, fast = fast->next; fast != slow; len++) {
+        fast = fast->next;
+    }
+    
+    return len;
+}
+
+
+static unsigned int get_pre_circle_length(struct ListNode* head)
+{
+    struct ListNode *p, *q;
+    unsigned int circle_len;
+    unsigned int pre_circle_len;
+    circle_len = get_circlr_length(head);
+    
+    if (circle_len == 0) {
+        return 0;
+    }
+    
+    for (p = head; circle_len > 0; circle_len--) {
+        p = p->next;
+    }
+    
+    
+    for (pre_circle_len = 0, q = head; p != q; pre_circle_len++) {
+        p = p->next;
+        q = q->next;
+    }
+    
+    return pre_circle_len;
+}
+
+static void del_list(struct ListNode** head)
+{
+    struct ListNode * p = *head;
+    struct ListNode * q;
+    struct ListNode * r;
+    unsigned int pre_circle_length;
+    unsigned int circle_length;
+    unsigned int loop = 0;
+    if (p == NULL) {
+        return;
+    }
+    
+    if (list_have_circle(*head) == 1) {
+        pre_circle_length = get_pre_circle_length(*head);
+        circle_length = get_circlr_length(*head);
+        loop = pre_circle_length;
+        q = p;
+        while (loop > 0) {
+            q = q->next;
+            loop--;
+        }
+ 
+        for (; circle_length > 0; circle_length--) {
+            r = q->next;
+            free(q);
+            q = r;
+        }
+        
+        q = p;
+        for (; pre_circle_length > 0; pre_circle_length--) {
+            r = q->next;
+            free(q);
+            q = r;
+        }
+    }
+    else
+    {
+        while (p != NULL) {
+            q = p->next;
+            free(p);
+            p = q;
+        }
+ 
+    }
+    *head = NULL;
+}
+
+
 void list_without_head_node_demo()
 {
     int i;
@@ -178,4 +338,13 @@ void list_without_head_node_demo()
     }
     print_list(head);
     reverse_print_list(head);
+    i = list_have_circle(head);
+    printf("i result is %d\n", i);
+    set_list_into_circle(head, 4);
+    i = get_circlr_length(head);
+    printf("get_circlr_length is %d\n", i);
+    i = get_pre_circle_length(head);
+    printf("get_pre_circle_length is %d\n", i);
+    del_list(&head);
+    print_list(head);
 }
