@@ -200,7 +200,7 @@ static void set_list_into_circle(struct ListNode* head, unsigned int count)
 }
 
 
-int list_have_circle(struct ListNode* head)
+static int list_have_circle(struct ListNode* head)
 {
     struct ListNode* fast, *slow;
     
@@ -229,7 +229,7 @@ int list_have_circle(struct ListNode* head)
 
 
 //get inner circle length
-unsigned int get_circlr_length(struct ListNode* head)
+static unsigned int get_circlr_length(struct ListNode* head)
 {
     struct ListNode* fast, *slow;
     unsigned int len;
@@ -327,7 +327,92 @@ static void del_list(struct ListNode** head)
     *head = NULL;
 }
 
+static int check_two_list_connect(struct ListNode* head_1, struct ListNode* head_2)
+{
+	struct ListNode* head_1_end, * head_2_end;
 
+	if (head_1 == NULL || head_2 == NULL)
+		return 0;
+
+	while(head_1 != NULL)
+	{
+		head_1_end = head_1;
+		head_1 = head_1->next;
+	}
+
+	while(head_2 != NULL)
+	{
+		head_2_end = head_2;
+		head_2 = head_2->next;
+	}
+	
+	if (head_1 == head_2) {
+	
+		return 1;
+	
+	} else {
+	
+		return 0;
+	}
+
+}
+
+static unsigned int get_2_list_meet_pos(struct ListNode* head_1, struct ListNode* head_2)
+{
+	struct ListNode*p, *q;
+	unsigned int pos = 0;
+	unsigned int len_1, len_2, offset,i;
+
+	if (head_1 == NULL || head_2 == NULL)
+	{
+		return;
+	}
+	len_1 = 0;
+	len_2 = 0;
+	
+	p = head_1;
+	q = head_2;
+	while(p != NULL)
+	{
+		len_1++;
+		p = p->next;
+	}
+
+	while(q != NULL)
+	{
+		len_2++;
+		q = q->next;
+	}
+	
+	offset = len_1 - len_2;
+	
+	if (offset >= 0)
+	{
+		p = head_1;
+		q = head_2;
+	}
+	else
+	{
+		p = head_2;
+		q = head_1;
+	}
+
+	for (i = 0 ; i < offset; i++)
+	{
+		p = p->next;
+	}
+
+	while ( p != q )
+	{
+		p = p->next;
+		q = q->next;
+		i++;
+	}
+
+	return i;
+
+
+}
 void list_without_head_node_demo()
 {
     int i;
