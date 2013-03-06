@@ -7,7 +7,7 @@
 //
 
 #include <stdio.h>
-
+#include <stdlib.h>
 typedef unsigned int ListType;
 
 struct ListNode
@@ -36,7 +36,6 @@ static unsigned int get_list_length(struct ListNode* head)
 static void add_node_to_head(struct ListNode** head, ListType value)
 {
     struct ListNode* p = *head;
-    struct ListNode* q;
     struct ListNode* new;
  
     new  = (struct ListNode*)malloc(sizeof(struct ListNode));
@@ -45,19 +44,14 @@ static void add_node_to_head(struct ListNode** head, ListType value)
     if (p == NULL) {
         printf("head is null\n");
         new->next = NULL;
-        
-        *head = new;
-        
     }
     else
     {
-        q = p->next;
-        
-        p->next = new;
-        
-        new->next = q;
+        new->next = p;
     }
-
+    *head = new;
+    
+    return;
 }
 
 static void add_node_to_tail(struct ListNode** head, ListType value)
@@ -360,12 +354,11 @@ static int check_two_list_connect(struct ListNode* head_1, struct ListNode* head
 static unsigned int get_2_list_meet_pos(struct ListNode* head_1, struct ListNode* head_2)
 {
 	struct ListNode*p, *q;
-	unsigned int pos = 0;
-	unsigned int len_1, len_2, offset,i;
-
+	unsigned int len_1, len_2, i;
+	int offset;
 	if (head_1 == NULL || head_2 == NULL)
 	{
-		return;
+		return 0;
 	}
 	len_1 = 0;
 	len_2 = 0;
@@ -410,15 +403,55 @@ static unsigned int get_2_list_meet_pos(struct ListNode* head_1, struct ListNode
 	}
 
 	return i;
-
-
 }
+
+
+
+static void connect_2_list(struct ListNode* head_1, struct ListNode* head_2)
+{
+    unsigned int len_1 = 0;
+    unsigned int len_2 = 0;
+    unsigned int len;
+    struct ListNode* p;
+    struct ListNode* q;
+    
+    for (p = head_1; p != NULL; len_1++) {
+        p = p->next;
+    }
+    
+    for (p = head_2; p != NULL; len_2++) {
+        p = p->next;
+    }
+    
+    if (len_1 >= len_2) {
+        p = head_2;
+        q = head_1;
+        len = len_2;
+
+    } else {
+        p = head_1;
+        q = head_2;
+        len = len_1;
+    }
+    
+    while (p->next) {
+        p = p->next;
+    }
+    while (len--) {
+        q = q->next;
+    }
+
+    p->next = q;
+    return;
+}
+
+
 void list_without_head_node_demo()
 {
     int i;
     struct ListNode* head = NULL;
-    
-    for (i = 0; i < 10; i++) {
+    struct ListNode* head_1, *head_2;
+    for (i = 0; i < 8; i++) {
         add_node_to_tail(&head, i);
     }
     print_list(head);
@@ -427,9 +460,22 @@ void list_without_head_node_demo()
     printf("i result is %d\n", i);
     set_list_into_circle(head, 4);
     i = get_circlr_length(head);
+ //   print_list(head);
     printf("get_circlr_length is %d\n", i);
     i = get_pre_circle_length(head);
     printf("get_pre_circle_length is %d\n", i);
     del_list(&head);
     print_list(head);
+    
+    
+    for (i = 0,head_1 = NULL; i < 10; i++) {
+        add_node_to_tail(&head_1, i);
+    }
+    
+    for (i =0, head_2 = NULL; i < 3; i++) {
+        add_node_to_head(&head_2, i);
+    }
+
+    connect_2_list(head_1, head_2);
+    printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2));
 }
