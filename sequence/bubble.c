@@ -1,24 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE   (10000)
+#define ARRAY_SIZE   (102*1024)
 
 
 void print_list(unsigned int * data, unsigned int len)
 {
-    if (data == NULL || len == 0)
+    unsigned int i;
+	if (data == NULL || len == 0)
         return;
-
-    while(len-- > 0)
+	
+	/* while(len-- > 0) */
+	for (i = 0; i < len; i++)
     {
-        printf("%d\n", data[len]);
+        printf("%d\n", data[i]);
     }
 
     return;
 }
 
-static void bubble_sort(unsigned int *data, unsigned int len)
+static void bubble_sort_increase_optimize(unsigned int * data, int len)
 {
-    unsigned int i,j;
+	int i, j;
+	unsigned int temp;
+	unsigned int flag = 1;
+
+	for(i = 0; i < len - 1 && flag; i++)
+	{
+		for (j = len - 1 - 1; j >= i; j--)
+		{
+			flag = 0;
+			if (data[j] > data[j + 1])
+			{
+				temp = data[j + 1];
+				data[j + 1] = data[j];
+				data[j] = temp;
+				flag = 1;
+			}
+		}
+	}
+
+	return;
+}
+
+static void bubble_sort_increase(unsigned int* data, int len)
+{
+	int i, j;
+	unsigned int temp;
+
+	for(i = 0; i < len - 1; i++)
+	{
+		for (j = len - 1 - 1; j >= i; j--)
+		{
+			if (data[j] > data[j + 1])
+			{
+				temp = data[j + 1];
+				data[j + 1] = data[j];
+				data[j] = temp;
+			}
+		}
+	}
+
+	return;
+}
+
+
+static void bubble_sort(unsigned int *data, int len)
+{
+    int i,j;
     unsigned int temp;
     for (i = 0; i < len; i++)
     {
@@ -32,6 +80,8 @@ static void bubble_sort(unsigned int *data, unsigned int len)
             }
         }
     }
+
+	return;
 }
 
 
@@ -50,10 +100,11 @@ int main()
         data[i] = rand();
     }
 
-    /* print_list(data, ARRAY_SIZE); */
+	print_list(data, ARRAY_SIZE);
     bubble_sort(data, ARRAY_SIZE);
-    printf("-------After Bubble Sort--------\n");
-    /* print_list(data, ARRAY_SIZE); */
+	printf("-------After Bubble Sort--------\n");
+	print_list(data, ARRAY_SIZE);
+
     free(data);
 
     return 0;
