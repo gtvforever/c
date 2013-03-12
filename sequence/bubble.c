@@ -56,5 +56,5 @@ int main()
     /* print_list(data, ARRAY_SIZE); */
     free(data);
 
-    return 0
+    return 0;
 }

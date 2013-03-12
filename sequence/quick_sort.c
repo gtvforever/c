@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE  (10)
+#define ARRAY_SIZE  (10000)
 void print_list(unsigned int* data, unsigned int len)
 {
     int i = 0;
@@ -61,9 +61,9 @@ int main()
 		data[i] = rand();
 	}
 
-	print_list(data, ARRAY_SIZE);
+    /* print_list(data, ARRAY_SIZE); */
     quick_sort(data,0, ARRAY_SIZE - 1);
 	printf("----------After quick sort-----------\n");
-	print_list(data, ARRAY_SIZE);
+    /* print_list(data, ARRAY_SIZE); */
     return 0;
 }
