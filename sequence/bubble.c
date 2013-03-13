@@ -72,7 +72,7 @@ static void bubble_sort(unsigned int *data, int len)
     {
         for (j = 0; j < len - i - 1; j++)
         {
-            if (data[j] < data[j + 1])
+            if (data[j] < data[j + 1]) //if condition is data[j] > data[j + 1], it will reverse the result
             {
                 temp = data[j];
                 data[j] = data[j + 1];
