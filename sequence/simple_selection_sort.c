@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE   (10)
+#define ARRAY_SIZE   (1024*10)
 
 
 void print_list(unsigned int * data, unsigned int len)
@@ -66,10 +66,10 @@ int main()
         data[i] = rand();
     }
 
-	print_list(data, ARRAY_SIZE);
-    simple_selection_sort(data, ARRAY_SIZE);
+	/* print_list(data, ARRAY_SIZE); */
+	simple_selection_sort(data, ARRAY_SIZE);
 	printf("-------After Simple Selection Sort--------\n");
-	print_list(data, ARRAY_SIZE);
+	/* print_list(data, ARRAY_SIZE); */
 
     free(data);
 

@@ -1,7 +1,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE  (10000)
+#define ARRAY_SIZE  (1024*10)
+
 void print_list(unsigned int* data, unsigned int len)
 {
     int i = 0;
@@ -51,19 +52,19 @@ static int quick_sort(unsigned int* data,  int low,  int high)
 
 int main()
 {
-    unsigned int i;
+	unsigned int i;
 	unsigned int * data = (unsigned int*)malloc(sizeof(unsigned int)*ARRAY_SIZE);
-    if(data == NULL)
-        return -1;
+	if(data == NULL)
+		return -1;
 
 	for (i = 0; i < ARRAY_SIZE; i++)
 	{
 		data[i] = rand();
 	}
 
-    /* print_list(data, ARRAY_SIZE); */
-    quick_sort(data,0, ARRAY_SIZE - 1);
+	/* print_list(data, ARRAY_SIZE); */
+	quick_sort(data,0, ARRAY_SIZE - 1);
 	printf("----------After quick sort-----------\n");
-    /* print_list(data, ARRAY_SIZE); */
-    return 0;
+	/* print_list(data, ARRAY_SIZE); */
+	return 0;
 }

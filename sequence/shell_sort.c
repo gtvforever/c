@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE   (1024*1024)
+#define ARRAY_SIZE   (1024*10)
 
 
 void print_list(unsigned int * data, unsigned int len)
@@ -67,9 +67,9 @@ int main()
     }
 
 	/* print_list(data, ARRAY_SIZE); */
-    shell_sort(data, ARRAY_SIZE);
+	shell_sort(data, ARRAY_SIZE);
 	printf("-------After Shell Sort--------\n");
-	print_list(data, ARRAY_SIZE);
+	/* print_list(data, ARRAY_SIZE); */
 
     free(data);
 
