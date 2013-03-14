@@ -5,17 +5,17 @@
 
 void print_list(unsigned int * data, unsigned int len)
 {
-    unsigned int i;
+	unsigned int i;
 	if (data == NULL || len == 0)
-        return;
-	
+		return;
+
 	/* while(len-- > 0) */
 	for (i = 0; i < len; i++)
-    {
-        printf("%d\n", data[i]);
-    }
+	{
+		printf("%d\n", data[i]);
+	}
 
-    return;
+	return;
 }
 
 static void bubble_sort_increase_optimize(unsigned int * data, int len)
@@ -66,20 +66,20 @@ static void bubble_sort_increase(unsigned int* data, int len)
 
 static void bubble_sort(unsigned int *data, int len)
 {
-    int i,j;
-    unsigned int temp;
-    for (i = 0; i < len; i++)
-    {
-        for (j = 0; j < len - i - 1; j++)
-        {
-            if (data[j] < data[j + 1]) //if condition is data[j] > data[j + 1], it will reverse the result
-            {
-                temp = data[j];
-                data[j] = data[j + 1];
-                data[j + 1] =temp;
-            }
-        }
-    }
+	int i,j;
+	unsigned int temp;
+	for (i = 0; i < len; i++)
+	{
+		for (j = 0; j < len - i - 1; j++)
+		{
+			if (data[j] < data[j + 1]) //if condition is data[j] > data[j + 1], it will reverse the result
+			{
+				temp = data[j];
+				data[j] = data[j + 1];
+				data[j + 1] =temp;
+			}
+		}
+	}
 
 	return;
 }

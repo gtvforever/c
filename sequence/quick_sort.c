@@ -5,12 +5,12 @@
 
 void print_list(unsigned int* data, unsigned int len)
 {
-    int i = 0;
+	int i = 0;
 
-    for(i = 0; i < len ; i++)
-    {
-        printf("%d\n", data[i]);
-    }
+	for(i = 0; i < len ; i++)
+	{
+		printf("%d\n", data[i]);
+	}
 }
 
 static void swap(unsigned int *data,  int low,  int high)
@@ -39,7 +39,7 @@ static unsigned int get_pivot(unsigned int* data,  int low,  int high)
 	return low;
 }
 
-static int quick_sort(unsigned int* data,  int low,  int high)
+static void quick_sort(unsigned int* data,  int low,  int high)
 {
 	unsigned int key;
 	if (low < high)

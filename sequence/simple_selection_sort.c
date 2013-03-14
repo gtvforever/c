@@ -5,16 +5,16 @@
 
 void print_list(unsigned int * data, unsigned int len)
 {
-    unsigned int i;
+	unsigned int i;
 	if (data == NULL || len == 0)
-        return;
-	
-	for (i = 0; i < len; i++)
-    {
-        printf("%d\n", data[i]);
-    }
+		return;
 
-    return;
+	for (i = 0; i < len; i++)
+	{
+		printf("%d\n", data[i]);
+	}
+
+	return;
 }
 
 
@@ -53,25 +53,25 @@ static void simple_selection_sort(unsigned int* data, int len)
 
 int main()
 {
-    unsigned int* data = (unsigned int*)malloc(sizeof(unsigned int)*ARRAY_SIZE);
-    unsigned int i;
-    if(data == NULL)
-    {
-        printf("malloc failed\n");
-        return 0;
-    }
+	unsigned int* data = (unsigned int*)malloc(sizeof(unsigned int)*ARRAY_SIZE);
+	unsigned int i;
+	if(data == NULL)
+	{
+		printf("malloc failed\n");
+		return 0;
+	}
 
-    for (i = 0; i < ARRAY_SIZE ; i++)
-    {
-        data[i] = rand();
-    }
+	for (i = 0; i < ARRAY_SIZE ; i++)
+	{
+		data[i] = rand();
+	}
 
 	/* print_list(data, ARRAY_SIZE); */
 	simple_selection_sort(data, ARRAY_SIZE);
 	printf("-------After Simple Selection Sort--------\n");
 	/* print_list(data, ARRAY_SIZE); */
 
-    free(data);
+	free(data);
 
-    return 0;
+	return 0;
 }
