@@ -26,14 +26,15 @@ static void bubble_sort_increase_optimize(unsigned int * data, int len)
 
 	for(i = 0; i < len - 1 && flag; i++)
 	{
-		for (j = len - 1 - 1; j >= i; j--)
+		flag = 0;
+		for (j = len - 1; j >= i ; j--)
 		{
-			flag = 0;
-			if (data[j] > data[j + 1])
+			if (data[j] < data[j - 1])
 			{
-				temp = data[j + 1];
-				data[j + 1] = data[j];
+				temp = data[j - 1];
+				data[j - 1] = data[j];
 				data[j] = temp;
+
 				flag = 1;
 			}
 		}
@@ -49,12 +50,12 @@ static void bubble_sort_increase(unsigned int* data, int len)
 
 	for(i = 0; i < len - 1; i++)
 	{
-		for (j = len - 1 - 1; j >= i; j--)
+		for (j = len - 1; j >= i; j--)
 		{
-			if (data[j] > data[j + 1])
+			if (data[j] < data[j - 1])
 			{
-				temp = data[j + 1];
-				data[j + 1] = data[j];
+				temp = data[j - 1];
+				data[j - 1] = data[j];
 				data[j] = temp;
 			}
 		}
@@ -101,7 +102,7 @@ int main()
 	}
 
 	/* print_list(data, ARRAY_SIZE); */
-	bubble_sort(data, ARRAY_SIZE);
+	bubble_sort_increase_optimize(data, ARRAY_SIZE);
 	printf("-------After Bubble Sort--------\n");
 	/* print_list(data, ARRAY_SIZE); */
 
