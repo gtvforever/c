@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE   (1024*10)
+#define ARRAY_SIZE   (1024*102)
 
 
 void print_list(unsigned int * data, unsigned int len)
@@ -31,7 +31,7 @@ static void simple_selection_sort(unsigned int* data, int len)
 	{
 		min = i;
 
-		for (j = i; j <= len - 1; j++)
+		for (j = i + 1 ; j < len; j++)
 		{
 			if (data[j] < data[min])
 			{
