@@ -26,7 +26,7 @@ static void straight_insertion_sort(unsigned int* data, int len)
 	if (len <= 0)
 		return;
 
-	for(i = 1; i <= len - 1; i++)
+	for(i = 1; i < len; i++)
 	{
 
 		if (data[i] < data[i - 1])
