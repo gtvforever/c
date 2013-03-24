@@ -22,12 +22,12 @@ STATUS binary_search(int* data, int key, unsigned int* pos)
 		count++;
 		if (data[mid] < key)
 		{
-			low = mid;	
+			low = mid - 1;	
 			
 		}
 		else if (data[mid] > key)
 		{
-			high = mid;
+			high = mid + 1;
 		}
 		else
 		{
