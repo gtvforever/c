@@ -82,18 +82,18 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
 }
 
 
-static void reverse_list(struct ListNode* head)
+static int reverse_list(struct ListNode** head)
 {
-    struct ListNode* p = head;
+    struct ListNode* p = *head;
     struct ListNode* q;
     struct ListNode* r;
     
     if (p == NULL || p->next->next == NULL) {
-        return;
+        return -1;
     }
     
     q = p->next;
-    
+    p->next = NULL;
     while (q) {
         r = q->next;
         
@@ -104,9 +104,9 @@ static void reverse_list(struct ListNode* head)
         q = r;
     }
     
-    head = p;
+    *head = p;
     
-    return;
+    return 0;
 }
 
 static struct ListNode* get_mid_node(struct ListNode* head)
