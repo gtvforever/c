@@ -65,3 +65,44 @@ void reverse_stringerse_string(char* p)
 	free(rev_str_1);
 	free(rev_str_2);
 }
+
+
+
+void myrevert(char* src)
+{
+	unsigned int len;
+	unsigned int i;
+	char temp;
+
+	len = strlen(src);
+
+	len += 1;  //if you want to ignore '\0', you need to comment this line
+
+	if(len == 2)
+		return;
+	
+	for(i = 0; i < len/2; i++)
+	{
+		/* printf("%d = %d\n", i, len- 1 -i); */
+		temp = src[i];
+		src[i] = src[len - 1 - i];
+		src[len -1 - i] = temp;
+	}
+
+
+}
+int main()
+{
+	char str[10] = "abcdefgh";
+	unsigned int i;
+	/* for(i = 0; i < 10; i++) */
+	/* { */
+		/* printf("%x\n", str[i]); */
+	/* } */
+	myrevert(str);
+	/* for(i = 0; i < 10; i++) */
+	/* { */
+		/* printf("%x\n", str[i]); */
+	/* } */
+	printf("%s\n", str);
+}
