@@ -88,7 +88,7 @@ static int reverse_list(struct ListNode** head)
     struct ListNode* q;
     struct ListNode* r;
     
-    if (p == NULL || p->next->next == NULL) {
+    if (p == NULL || p->next == NULL) {
         return -1;
     }
     
