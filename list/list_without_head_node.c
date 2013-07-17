@@ -82,6 +82,20 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
 }
 
 
+static struct ListNode* reverse_list_recursive(struct ListNode* head)
+{
+    if(head == NULL || head->next == NULL)
+        return head;
+    else
+    {
+        struct ListNode* r;
+        r = reverse_list_recursive(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return r;
+    }
+}
+
 static int reverse_list(struct ListNode** head)
 {
     struct ListNode* p = *head;
