@@ -25,7 +25,7 @@ static void merge(unsigned int* src, unsigned int* temp, int s, int m, int n)
 
 	while( i <= m && j <= n)
 	{
-		if (src[i] < src[j])
+		if (src[i] <= src[j])
 			temp[k++] = src[i++];
 		else
 			temp[k++] = src[j++];
