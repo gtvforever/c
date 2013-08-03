@@ -199,45 +199,73 @@ BOOL get_min_node_key(BST_TREE root, int* buf)
 }
 
 
-BOOL get_second_max_node(BST_TREE root, int* buf)
+BOOL get_second_max_node(BST_TREE root, BST_TREE* sec_node)
 {
-	BST_TREE p, q;
-	if(root == NULL || buf == NULL)
+	BST_TREE p, q, s;
+	
+	if(root == NULL || (root->lchild == NULL && root->rchild == NULL))
 		return FALSE;
 
+	p = root;
+	q = p;
 	while(p->rchild != NULL)
 	{
 		q = p;
 		p = p->rchild;
 	}
-	
-	*buf = q->key;
+	if(p->lchild == NULL)
+	{
+		*sec_node = q;
+	}
+	else
+	{
+		s = p->lchild;
+		while(s->rchild)
+		{
+			s = s->rchild;
+		}
+		*sec_node = s;
+	}
 	
 	return TRUE;
 }
 
 
-BOOL get_second_min_node(BST_TREE root, int* buf)
+BOOL get_second_min_node(BST_TREE root, BST_TREE* sec_node)
 {
-	BST_TREE p, q;
-	if(root == NULL || buf == NULL)
+	BST_TREE p, q, s;
+	if(root == NULL || (root->lchild == NULL && root->rchild == NULL))
 		return FALSE;
+
+	p = root;
+	q = p;
 
 	while(p->lchild != NULL)
 	{
 		q = p;
 		p = p->lchild;
 	}
-	
-	*buf = q->key;
-	
+	if(p->rchild == NULL)
+	{
+		*sec_node = q;
+	}
+	else
+	{
+		s = s->rchild;
+
+		while(s->lchild)
+		{
+			s = s->lchild;
+		}
+		*sec_node = s;
+	}
 	return TRUE;
 }
 
 BOOL get_min_node(BST_TREE root, BST_TREE* min_node)
 {
 	BST_TREE p;
-	if(root == NULL ||min_node == NULL)
+	if(root == NULL)
 		return FALSE;
 
 	while(p->lchild != NULL)
