@@ -14,23 +14,20 @@ struct ListNode
 {
     ListType data;
     struct ListNode* next;
-};
+}NODE;
 
 //Get list length
 static unsigned int get_list_length(struct ListNode* head)
 {
     unsigned int length = 0;
     struct ListNode* p = head;
-    if (NULL == head) {
-        return length;
-    }
     
     while (p != NULL) {
         length++;
         p = p->next;
     }
-    return length;
-    
+ 
+ 	return length;
 }
 
 static void add_node_to_head(struct ListNode** head, ListType value)
@@ -460,6 +457,90 @@ static void connect_2_list(struct ListNode* head_1, struct ListNode* head_2)
 }
 
 
+
+static NODE* list_merge_1(NODE* head_1, NODE* head_2)
+{
+	NODE* p1 = head_1;
+	NODE* p2 = head_2;
+	NODE* cur;
+	NODE* head;
+	if (p1 == NULL )
+	{
+		return p2;
+	}
+	
+	if (p2 == NULL)
+	{
+		return p1;
+	}
+
+	if(p1->data <= p2->data)
+	{
+		p1 = p1->next;
+		head = p1;
+	}
+	else
+	{
+		p2 = p2->next;
+		head = p2;
+	}
+
+	cur  = head;
+	
+	while(p1 != NULL && p2 != NULL)
+	{
+		if (p1->data < p2->data)
+		{
+			cur->next = p1;
+			cur = p1;
+			p1 = p1->next;
+		}
+		else
+		{
+			cur->next = p2;
+			cur = p2;
+			p2 = p2->next;
+		}
+	}
+
+	if (p1 != NULL)
+	{
+		cur->next = p1;
+	}
+
+	if (p2 != NULL)
+	{
+		cur->next = p2;
+	}
+
+	return head;
+}
+
+
+static NODE* list_merge(NODE* p1, NODE* p2)
+{
+	NODE* ret;
+
+	if (p1 == NULL)
+		return p2;
+	
+	if (p2 == NULL)
+		return p1;
+
+	if (p1->data < p2->data)
+	{
+		ret = p1;
+		ret->next = list_merge(p1->next, p2);
+	}
+	else
+	{
+		ret = p2;
+		ret->next = list_merge(p1, p2->next);
+	}
+
+	return ret;
+
+}
 void list_without_head_node_demo()
 {
     int i;
