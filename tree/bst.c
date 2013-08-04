@@ -40,7 +40,7 @@ BOOL addtobst(BST_TREE *root, int data)
 {
 	BST_TREE last;
 	BST_TREE node;
-	if(!search_bst(*root, NULL, data, &last) == FALSE)
+	if(search_bst(*root, NULL, data, &last) == FALSE)
 	{
 		node = (BST_TREE)malloc(sizeof(BST_NODE));
 		node->key = data;
@@ -278,8 +278,80 @@ BOOL get_min_node(BST_TREE root, BST_TREE* min_node)
 	return TRUE;
 }
 
+int count = 0;
+int found_k_node(BST_TREE root, int k, int* out)
+{
+	if(root == NULL || k < 1)
+		return 0;
+
+	found_k_node(root->rchild, k, out);
+	
+	count++;
+	
+	if(count == k)
+	{
+		*out = root->key;
+		return 0;
+	}
+	found_k_node(root->lchild, k, out);
+
+	if (count < k)
+		return -1;
+	else
+		return 0;
+}
+
+
+BST_TREE pre = NULL;
+BST_TREE head;
+
+void convert(BST_TREE p)
+{
+	p->lchild = pre;
+
+	if(p->lchild == NULL)
+	{
+		head = p;
+	}
+	else
+	{
+		pre->rchild = p;
+	}
+	pre = p;
+}
+
+/*********************************
+  Convert a bst to double-linked list
+*********************************/
+void in_order(BST_TREE root)
+{
+	if(root == NULL)
+		return;
+
+	in_order(root->lchild);
+
+	convert(root);
+	
+	in_order(root->rchild);
+}
+
 
 int main()
 {
+	int i;
+	int value;
+	int data[10] = {6,4,8,2,5,7,9,10,1,3};
+	BOOL status;
+	BST_TREE root = NULL;
+
+	for (i = 0; i < sizeof(data)/sizeof(data[0]); i++)
+	{
+		status = addtobst(&root, data[i]);
+	}
+	/* found_k_node(root, 8, &value); */
+	/* tree_to_double_list(root); */
+	in_order(root);
+	printf("%d\n", head->key);
+
 	return 0;
 }
