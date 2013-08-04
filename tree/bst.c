@@ -356,19 +356,61 @@ int max_depth(BST_TREE root)
 
 
 }
+
+BOOL isbst(BST_TREE root, int min, int max)
+{
+	BOOL left, right;
+	if(root == NULL)
+		return TRUE;
+
+	if(root->key > min && root->key < max)
+	{
+		return isbst(root->lchild, min, root->key) && isbst(root->rchild, root->key, max);
+	}
+	else
+		return FALSE;
+	
+}
+
+int get_leaf_num(BST_TREE root)
+{
+	if(root == NULL)
+		return 0;
+	if(root->lchild == NULL && root->rchild == NULL)
+		return 1;
+	return get_leaf_num(root->lchild) + get_leaf_num(root->rchild);
+}
+
+BST_TREE get_lca_node(BST_TREE root, int v1, int v2)
+{
+	if(root == NULL)
+		return NULL;
+	
+	if(root->key > v1 && root->key > v2)
+		return get_lca_node(root->lchild, v1, v2);
+
+	if(root->key < v1 && root->key < v2)
+		return get_lca_node(root->lchild, v1, v2);
+	else
+		return root;
+}
 int main()
 {
 	int i;
 	int value;
 	int data[10] = {6,4,8,2,5,7,9,10,1,3};
 	BST_TREE root = NULL;
-
+	BST_TREE lca;
 	for (i = 0; i < sizeof(data)/sizeof(data[0]); i++)
 	{
 		addtobst(&root, data[i]);
 	}
 	/* found_k_node(root, 8, &value); */
 	printf("tree depth: %d\n", max_depth(root));
+	printf("Is it a bst tree? %s\n", isbst(root, 0, 200)?"Ture":"False");
+	printf("Leaf node num: %d\n", get_leaf_num(root));
+	lca = get_lca_node(root,3,5);
+	printf("LCA of 3, 5 : %d\n", lca->key);
 	in_order(root);
 
 	return 0;
