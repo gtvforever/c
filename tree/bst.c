@@ -336,22 +336,40 @@ void in_order(BST_TREE root)
 }
 
 
+int max_depth(BST_TREE root)
+{
+	int ldepth,rdepth;
+	if(root == NULL)
+		return 0;
+
+	ldepth = max_depth(root->lchild);
+	rdepth = max_depth(root->rchild);
+	
+	if(ldepth > rdepth)
+	{
+		return ldepth + 1;
+	}
+	else
+	{
+		return rdepth + 1;
+	}
+
+
+}
 int main()
 {
 	int i;
 	int value;
 	int data[10] = {6,4,8,2,5,7,9,10,1,3};
-	BOOL status;
 	BST_TREE root = NULL;
 
 	for (i = 0; i < sizeof(data)/sizeof(data[0]); i++)
 	{
-		status = addtobst(&root, data[i]);
+		addtobst(&root, data[i]);
 	}
 	/* found_k_node(root, 8, &value); */
-	/* tree_to_double_list(root); */
+	printf("tree depth: %d\n", max_depth(root));
 	in_order(root);
-	printf("%d\n", head->key);
 
 	return 0;
 }
