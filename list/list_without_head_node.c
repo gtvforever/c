@@ -10,7 +10,7 @@
 #include <stdlib.h>
 typedef unsigned int ListType;
 
-struct ListNode
+typedef struct ListNode
 {
     ListType data;
     struct ListNode* next;
@@ -39,7 +39,7 @@ static void add_node_to_head(struct ListNode** head, ListType value)
     new->data = value;
     
     if (p == NULL) {
-        printf("head is null\n");
+        /* printf("head is null\n"); */
         new->next = NULL;
     }
     else
@@ -464,6 +464,7 @@ static NODE* list_merge_1(NODE* head_1, NODE* head_2)
 	NODE* p2 = head_2;
 	NODE* cur;
 	NODE* head;
+
 	if (p1 == NULL )
 	{
 		return p2;
@@ -476,16 +477,16 @@ static NODE* list_merge_1(NODE* head_1, NODE* head_2)
 
 	if(p1->data <= p2->data)
 	{
-		p1 = p1->next;
 		head = p1;
+		p1 = p1->next;
 	}
 	else
 	{
-		p2 = p2->next;
 		head = p2;
+		p2 = p2->next;
 	}
 
-	cur  = head;
+	cur = head;
 	
 	while(p1 != NULL && p2 != NULL)
 	{
@@ -541,36 +542,42 @@ static NODE* list_merge(NODE* p1, NODE* p2)
 	return ret;
 
 }
-void list_without_head_node_demo()
+
+void main()
 {
     int i;
     struct ListNode* head = NULL;
-    struct ListNode* head_1, *head_2;
-    for (i = 0; i < 8; i++) {
-        add_node_to_tail(&head, i);
-    }
-    print_list(head);
-    reverse_print_list(head);
-    i = list_have_circle(head);
-    printf("i result is %d\n", i);
-    set_list_into_circle(head, 4);
-    i = get_circlr_length(head);
- //   print_list(head);
-    printf("get_circlr_length is %d\n", i);
-    i = get_pre_circle_length(head);
-    printf("get_pre_circle_length is %d\n", i);
-    del_list(&head);
-    print_list(head);
+    struct ListNode* head_1, *head_2, *head_3;
+ /*    for (i = 0; i < 8; i++) {                   */
+ /*        add_node_to_tail(&head, i);             */
+ /*    }                                           */
+ /*    print_list(head);                           */
+ /*    reverse_print_list(head);                   */
+ /*    i = list_have_circle(head);                 */
+ /*    printf("i result is %d\n", i);              */
+ /*    set_list_into_circle(head, 4);              */
+ /*    i = get_circlr_length(head);                */
+ /* //   print_list(head);                         */
+ /*    printf("get_circlr_length is %d\n", i);     */
+ /*    i = get_pre_circle_length(head);            */
+ /*    printf("get_pre_circle_length is %d\n", i); */
+ /*    del_list(&head);                            */
+ /*    print_list(head);                           */
     
-    
-    for (i = 0,head_1 = NULL; i < 10; i++) {
-        add_node_to_tail(&head_1, i);
+    int data[10] = {1,2,3,4,5,6,7,8,9,10};
+    for (i = 0,head_1 = NULL; i < 10; i+=2) {
+        add_node_to_tail(&head_1, data[i]);
     }
     
-    for (i =0, head_2 = NULL; i < 3; i++) {
-        add_node_to_head(&head_2, i);
+    print_list(head_1);
+    for (i = 1, head_2 = NULL; i < 10; i+=2) {
+        add_node_to_tail(&head_2, data[i]);
     }
-
-    connect_2_list(head_1, head_2);
-    printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2));
+    print_list(head_2);
+    head_3 = list_merge_1(head_1, head_2);
+    print_list(head_3);
+    /* connect_2_list(head_1, head_2); */
+    /* printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2)); */
 }
+
+
