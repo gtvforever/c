@@ -394,6 +394,24 @@ BST_TREE get_lca_node(BST_TREE root, int v1, int v2)
 	else
 		return root;
 }
+
+int get_level_node_num(BST_TREE root, int current, int desire)
+{
+	if(root == NULL)
+		return 0;
+	if(current > desire)
+		return 0;
+	if(current == desire)
+	{
+		printf("root value is %d\n", root->key);
+		return 1;
+	}
+	else
+	{
+		return get_level_node_num(root->lchild, current + 1, desire) + get_level_node_num(root->rchild, current + 1, desire);
+	}
+
+}
 int main()
 {
 	int i;
@@ -409,6 +427,7 @@ int main()
 	printf("tree depth: %d\n", max_depth(root));
 	printf("Is it a bst tree? %s\n", isbst(root, 0, 200)?"Ture":"False");
 	printf("Leaf node num: %d\n", get_leaf_num(root));
+	printf("3rd level node num is %d\n", get_level_node_num(root, 0, 2));
 	lca = get_lca_node(root,3,5);
 	printf("LCA of 3, 5 : %d\n", lca->key);
 	in_order(root);
