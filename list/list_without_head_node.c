@@ -543,7 +543,38 @@ static NODE* list_merge(NODE* p1, NODE* p2)
 
 }
 
-void main()
+
+static NODE* get_kth_node(NODE* head, unsigned int k)
+{
+	NODE* p, *q;
+	if (head == NULL || k < 1)
+		return NULL;
+	
+	p  = q = head;
+
+	while(p && k > 0)
+	{
+		p = p->next;
+		k--;
+	}
+	
+	if(p != NULL)
+	{
+		while(p != NULL)
+		{
+			p = p->next;
+			q = q->next;
+		}
+		return q;
+	}
+	else
+	{
+		return NULL;
+	}	
+
+}
+
+int main()
 {
     int i;
     struct ListNode* head = NULL;
@@ -568,13 +599,15 @@ void main()
     for (i = 0,head_1 = NULL; i < 10; i+=2) {
         add_node_to_tail(&head_1, data[i]);
     }
-    
+
     print_list(head_1);
-    for (i = 1, head_2 = NULL; i < 10; i+=2) {
+    
+	for (i = 1, head_2 = NULL; i < 10; i+=2) {
         add_node_to_tail(&head_2, data[i]);
     }
     print_list(head_2);
-    head_3 = list_merge_1(head_1, head_2);
+    
+	head_3 = list_merge_1(head_1, head_2);
     print_list(head_3);
     /* connect_2_list(head_1, head_2); */
     /* printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2)); */
