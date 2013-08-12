@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #define	QUEUE_SIZE (10)
+
+#define USE_MY_QUEUE (1)
 typedef int DataType;
 
 typedef struct qnode {
@@ -24,8 +26,11 @@ void print_q(Q_LIST* q)
 		printf("invalid queue\n");
 		return;
 	}
-	
+#if USE_MY_QUEUE
+	r = p->front;
+#else
 	r = p->front->next;
+#endif
 	while (r != NULL)
 	{
 		printf("%d\n", r->data);
@@ -40,6 +45,41 @@ void init_q_list(Q_NODE * head, Q_LIST * q)
 	q->front = head;
 }
 
+void init_q(Q_LIST* q)
+{
+	q->rear = q->front = NULL;
+}
+
+void enqueue1(Q_LIST* q, DataType e)
+{
+	P_Q_NODE new;
+
+	new = (P_Q_NODE)malloc(sizeof(Q_NODE));
+	new->data = e;
+	new->next = NULL;
+	if(q->front == NULL)
+	{
+		q->front = q->rear = new;
+	}
+	else
+	{
+		q->rear->next = new;
+		q->rear = new;
+	}
+}
+
+int dequeue1(Q_LIST* q, DataType * out)
+{
+	P_Q_NODE tmp;
+	if(q->front == NULL)
+		return -1;
+	tmp = q->front->next;
+	*out = q->front->data;
+	free(q->front);
+	q->front = tmp;
+
+	return 0;
+}
 int enqueue(Q_LIST* q, DataType e)
 {
 	P_Q_NODE n;
@@ -84,18 +124,29 @@ int main()
 	Q_LIST q;
 	int i;
 	DataType temp;
+#if USE_MY_QUEUE
+	init_q(&q);
+#else
 	init_q_list(&head, &q);
-
+#endif
 	for (i = 0; i < QUEUE_SIZE; i++)
 	{
+#if USE_MY_QUEUE
+		enqueue1(&q, rand());
+#else
 		enqueue(&q, rand());
+#endif
 	}
 
 	print_q(&q);
 
 	for (i = 0; i < QUEUE_SIZE/2; i++)
 	{
+#if USE_MY_QUEUE
+		dequeue1(&q, &temp);
+#else
 		dequeue(&q, &temp);
+#endif
 		printf("dequeue element is %d\n", temp);
 	}
 
