@@ -72,10 +72,16 @@ int dequeue1(Q_LIST* q, DataType * out)
 {
 	P_Q_NODE tmp;
 	if(q->front == NULL)
+	{
+		printf("queue is empty, q->read:%p\n", q->rear);
 		return -1;
+	}
 	tmp = q->front->next;
 	*out = q->front->data;
 	free(q->front);
+	if(q->rear == q->front)
+		q->rear = tmp;
+
 	q->front = tmp;
 
 	return 0;
