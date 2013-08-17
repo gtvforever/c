@@ -412,6 +412,33 @@ int get_level_node_num(BST_TREE root, int current, int desire)
 	}
 
 }
+
+void mirror_tree(BST_TREE root)
+{
+	if(root == NULL)
+		return;
+	mirror_tree(root->lchild);
+	BST_TREE tmp = root->rchild;
+	root->rchild = root->lchild;
+	root->lchild = tmp;
+	mirror_tree(root->lchild);
+}
+void mirror_tree_2(BST_TREE root)
+{
+	BST_TREE tmp;
+
+	if(root == NULL)
+		return;
+	tmp = root->lchild;
+	root->lchild = root->rchild;
+	root->rchild = tmp;
+
+	if(root->lchild != NULL)
+		mirror_tree_2(root->lchild);
+
+	if(root->rchild != NULL)
+		mirror_tree_2(root->rchild);
+}
 int main()
 {
 	int i;
@@ -424,13 +451,18 @@ int main()
 		addtobst(&root, data[i]);
 	}
 	/* found_k_node(root, 8, &value); */
-	printf("tree depth: %d\n", max_depth(root));
-	printf("Is it a bst tree? %s\n", isbst(root, 0, 200)?"Ture":"False");
-	printf("Leaf node num: %d\n", get_leaf_num(root));
-	printf("3rd level node num is %d\n", get_level_node_num(root, 0, 2));
-	lca = get_lca_node(root,3,5);
-	printf("LCA of 3, 5 : %d\n", lca->key);
+	/* printf("tree depth: %d\n", max_depth(root));                          */
+	/* printf("Is it a bst tree? %s\n", isbst(root, 0, 200)?"Ture":"False"); */
+	/* printf("Leaf node num: %d\n", get_leaf_num(root));                    */
+	/* printf("3rd level node num is %d\n", get_level_node_num(root, 0, 2)); */
+	/* lca = get_lca_node(root,3,5);                                         */
+	/* printf("LCA of 3, 5 : %d\n", lca->key);                               */
+	mirror_tree_2(root);
 	in_order(root);
-
+	while(head)
+	{
+		printf("%d\n", head->key);
+		head = head->rchild;
+	}
 	return 0;
 }
