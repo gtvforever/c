@@ -88,6 +88,26 @@ void bst_to_double_linked_list(BST_TREE root)
 	pre = root;
 	bst_to_double_linked_list(root->rchild);
 }
+
+void bst_to_double_linked_list_1(BST_TREE root, BST_TREE * pre, BST_TREE* head)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+	bst_to_double_linked_list_1(root->lchild, pre, head);
+	root->lchild = *pre;
+	if(*pre == NULL)
+	{
+		*head= root;
+	}
+	else
+	{
+		(*pre)->rchild = root;
+	}
+	*pre = root;
+	bst_to_double_linked_list_1(root->rchild, pre, head);
+}
 /*
        6
      4   8
@@ -101,11 +121,14 @@ int main()
 	int data[10] = {6,4,8,2,5,7,9,10,1,3};
 	BST_TREE root = NULL;
 	BST_TREE list;
+	BST_TREE pre = NULL;
+	BST_TREE head = NULL;
 	for (i = 0; i < sizeof(data)/sizeof(data[0]); i++)
 	{
 		addtobst(&root, data[i]);
 	}
-	bst_to_double_linked_list(root);
+	/* bst_to_double_linked_list(root); */
+	bst_to_double_linked_list_1(root, &pre, &head);
 	list = head;
 	while(list != NULL)
 	{
