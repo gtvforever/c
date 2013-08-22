@@ -401,6 +401,21 @@ void my_mirror_bst_tree(BST_TREE root)
 		my_mirror_bst_tree(root->right);
 	
 }
+
+
+unsigned int get_max_distance(BST_TREE root)
+{
+	unsigned int left, right;
+	if(root == NULL)
+		return 0;
+	
+	left = get_tree_depth(root->left);
+	right = get_tree_depth(root->right);
+
+	return left + right + 1;
+}
+
+
 int main()
 {
 	int data[12] = {6,2,8,1,4,7,9,0,3,5,11,10};
@@ -439,7 +454,8 @@ int main()
 	printf("the 2nd min node key is %d\n", t->key);
 
 	printf("tree depth is %d\n", get_tree_depth(root));
-
+	
+	printf("max length is %d\n", get_max_distance(root));
 	printf("tree node number is %d\n", get_node_num(root));
 
 	printf("leaf node num is %d\n", get_leaf_node_num(root));
