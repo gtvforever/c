@@ -79,6 +79,25 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
 }
 
 
+static void reverse_list_recursive_2(NODE* head, NODE** new_head)
+{
+
+	if(head == NULL)
+	{
+		return;
+	}
+	if(head->next == NULL)
+	{
+		*new_head = head;
+		return;
+	}
+	reverse_list_recursive_2(head->next, new_head);
+	head->next->next = head;
+	head->next = NULL;
+
+}
+
+
 static struct ListNode* reverse_list_recursive(struct ListNode* head)
 {
     if(head == NULL || head->next == NULL)
@@ -118,6 +137,37 @@ static int reverse_list(struct ListNode** head)
     *head = p;
     
     return 0;
+}
+
+
+
+static NODE* reverse_list_non_recursive(NODE* head)
+{
+	NODE* last;
+	NODE* cur;
+	NODE* tmp;
+	
+	if(head == NULL)
+		return NULL;
+	
+	if(head->next == NULL)
+		return head;
+
+	last = head;
+	
+	cur = head->next;
+	
+	last->next = NULL;
+
+	while(cur != NULL)
+	{
+		tmp = cur->next;
+		cur->next = last;
+		last = cur;
+		cur = tmp;
+	}
+
+	return last;
 }
 
 static struct ListNode* get_mid_node(struct ListNode* head)
