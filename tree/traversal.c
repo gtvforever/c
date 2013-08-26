@@ -250,11 +250,37 @@ void pre_order_no_recursive(BST_TREE root)
 			cur = mytop(s);
 			mypop(s, &out);
 			mypush(s, cur->rchild);
-
 		}
 	}
-
 }
+
+void pre_order_no_recursive_2(BST_TREE root)
+{
+	STACK st;
+	STACK* s = &st;
+	BST_TREE cur, out;
+	init_stack(s);
+	
+	mypush(s, root);
+
+	while(isempty(s))
+	{
+		cur = mytop(s);
+		printf("%d ", cur->key);
+		mypop(s, &out);
+
+		if(cur->rchild != NULL)
+		{
+			mypush(s, cur->rchild);
+		}
+		if(cur->lchild != NULL)
+		{
+			mypush(s, cur->lchild);
+		}
+	}
+}
+
+
 void in_order_no_recursive(BST_TREE root)
 {
 	STACK s;
@@ -278,6 +304,31 @@ void in_order_no_recursive(BST_TREE root)
 			printf("%d ", n->key);
 			mypop(p, &tmp);
 			mypush(p, n->rchild);
+		}
+	}
+}
+
+void in_order_no_recursive_2(BST_TREE root)
+{
+	STACK st;
+	STACK* s = &st;
+	BST_TREE cur, out;
+	init_stack(s);
+	
+	cur = root;
+	while(cur != NULL || isempty(s))
+	{
+		if(cur != NULL)
+		{
+			mypush(s, cur);
+			cur = cur->lchild;
+		}
+		else
+		{
+			cur = mytop(s);
+			printf("%d ", cur->key);
+			mypop(s, &out);
+			cur = cur->rchild;
 		}
 	}
 }
@@ -531,13 +582,13 @@ int main()
 	pre_order_recursive(root);
 	printf("\n");
 	printf("***pre order without recursive***\n");
-	pre_order_no_recursive(root);
+	pre_order_no_recursive_2(root);
 	printf("\n");
 	printf(">>>>>>in order in recursive<<<<<<<\n");
 	in_order_recursive(root);
 	printf("\n");
 	printf("****in order without recursive****\n");
-	in_order_no_recursive(root);
+	in_order_no_recursive_2(root);
 	printf("\n");
 	printf(">>>>>>post order in recursive<<<<<\n");
 	post_order_recursive(root);
