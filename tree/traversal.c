@@ -370,7 +370,49 @@ void post_order_without_recursive(BST_TREE root)
 	}
 }
 
+void post_order_without_recursive_3(BST_TREE root)
+{
+	BST_TREE pre = NULL;
+	BST_TREE cur, out;
+	
+	STACK st;
+	STACK* s = &st;
 
+	if(root == NULL)
+		return;
+
+	init_stack(s);
+	mypush(s, root);
+
+	while(isempty(s))
+	{
+		cur = mytop(s);
+
+		if(pre == NULL || cur == pre->lchild || cur == pre->rchild)
+		{
+			if(cur->lchild != NULL)
+			{
+				mypush(s, cur->lchild);
+			}
+			else if(cur->rchild != NULL)
+			{
+				mypush(s, cur->rchild);
+			}
+		}
+		else if(cur->lchild == pre)
+		{
+			if(cur->rchild != NULL)
+				mypush(s, cur->rchild);
+		}
+		else
+		{
+			printf("%d ", cur->key);
+			mypop(s, &out);
+		}
+
+		pre = cur;
+	}
+}
 void post_order_without_recursive_2(BST_TREE root)
 {
 	STACK st;
@@ -593,11 +635,14 @@ int main()
 	printf(">>>>>>post order in recursive<<<<<\n");
 	post_order_recursive(root);
 	printf("\n");
-	printf("****in order without recursive method 1****\n");
+	printf("****post order without recursive method 1****\n");
 	post_order_without_recursive(root);
 	printf("\n");
-	printf("****in order without recursive method 2****\n");
+	printf("****post order without recursive method 2****\n");
 	post_order_without_recursive_2(root);
+	printf("\n");
+	printf("****post order without recursive method 3****\n");
+	post_order_without_recursive_3(root);
 	printf("\n");
 	
 	printf("level order\n");
