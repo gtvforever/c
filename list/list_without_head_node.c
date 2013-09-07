@@ -266,7 +266,7 @@ static int list_have_circle(struct ListNode* head)
     fast = head->next->next;
     slow = head;
     
-    while (slow != fast) {
+    while (slow != NULL && fast != NULL && slow != fast) {
         fast = fast->next;
         if (fast->next) {
             fast = fast->next;
@@ -277,8 +277,11 @@ static int list_have_circle(struct ListNode* head)
         }
         slow = slow->next;
     }
-    
-    return 1;
+
+	if(slow == fast)
+		return 1;
+	else
+		return 0;
 }
 
 
