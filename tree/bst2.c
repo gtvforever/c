@@ -343,7 +343,7 @@ int get_leaf_node_num(BST_TREE root)
 {
 	if(root == NULL)
 		return 0;
-	if(root->left == NULL || root->right == NULL)
+	if(root->left == NULL && root->right == NULL)
 		return 1;
 	
 	return get_leaf_node_num(root->left) + get_leaf_node_num(root->right);
@@ -358,9 +358,9 @@ void bst_to_double_list(BST_TREE root)
 	}
 	
 	bst_to_double_list(root->left);
+	root->left = pre;
 	if(pre == NULL)
 	{
-		root->left = pre;
 		head = root;
 	}
 	else
@@ -372,6 +372,27 @@ void bst_to_double_list(BST_TREE root)
 	return;
 }
 
+
+void bst_to_double_list_recursive(BST_TREE root, BST_TREE* last, BST_TREE* new_head)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+	bst_to_double_list_recursive(root->left, last, new_head);
+		root->left = *last;
+	if(*last == NULL)
+	{
+		*new_head = root;
+	}
+	else
+	{
+		(*last)->right = root;
+	}
+	*last = root;
+	bst_to_double_list_recursive(root->right, last, new_head);
+
+}
 bool is_bst_tree(BST_TREE root, int min, int max)
 {
 	if(root == NULL)
@@ -420,6 +441,7 @@ int main()
 	int i;
 	BST_TREE root = NULL;
 	BST_TREE t;
+	BST_TREE last = NULL, new_head;
 	printf("BST create/search/delete demo\n");
 	for(i = 0; i < sizeof(data)/sizeof(data[0]); i++)
 	{
@@ -463,15 +485,25 @@ int main()
 		printf("lca node of 7, 11 is %d\n", t->key);
 	else
 		printf("No lca node found\n");
-
-	bst_to_double_list(root);
-	printf("%d %d %d\n",root->key, root->left->key, root->right->key);
-	/* while(head != NULL)           */
-	/* {                             */
-	/*     printf("%d ", head->key); */
-	/*     head = head->right;       */
-	/* }                             */
-	/* printf("\n");                 */
+	bst_to_double_list_recursive(root, &last, &new_head);
+	/* bst_to_double_list(root); */
+	/* printf("%d %d %d\n",root->key, root->left->key, root->right->key); */
+	head = new_head;
+	/* new_head = head; */
+	while(head != NULL)
+	{
+		new_head = head;
+		printf("%d ", head->key);
+		head = head->right;
+	}
+	printf("\n");
+	head = new_head;
+	while(head != NULL)
+	{
+		printf("%d ", head->key);
+		head = head->left;
+	}
+	printf("\n");
 	printf("root is a bst tree? %s\n", is_bst_tree(root, -100, 200)?"true":"false");
 	return 0;
 }
