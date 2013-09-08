@@ -118,10 +118,8 @@ bool delete_node_from_bst(BST_TREE* root, int value)
 				last->right = NULL;
 			}
 		}
-
-
 	}
-	else if(cur->left == NULL)
+	else if(cur->left == NULL && cur->right != NULL)
 	{
 		if(cur == *root)  //if cur is the root node
 		{
@@ -141,7 +139,7 @@ bool delete_node_from_bst(BST_TREE* root, int value)
 		}
 
 	}
-	else if(cur->right == NULL)
+	else if(cur->right == NULL && cur->left != NULL)
 	{
 		if(cur == *root)  //if cur is the root node
 		{
@@ -175,7 +173,7 @@ bool delete_node_from_bst(BST_TREE* root, int value)
 
 		replace->key = cur->key;
 
-		if(cur == replace)
+		if(cur == replace->left)
 		{
 			replace->left = cur->left;
 		}
@@ -431,7 +429,8 @@ int main()
 	in_order(root);
 	printf("\n");
 
-	delete_node_from_bst(&root, 5);
+	delete_node_from_bst(&root, 2);
+	printf("delete node 2\n");
 	printf("in order:\n ");
 	in_order(root);
 	printf("\n");
