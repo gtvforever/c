@@ -152,11 +152,11 @@ BOOL search_bst(BST_TREE root,BST_TREE parent, int data, BST_TREE* last)
 	}
 	else if (root->key < data)
 	{
-		search_bst(root->rchild, root, data, last);
+		return  search_bst(root->rchild, root, data, last);
 	}
 	else if (root->key > data)
 	{
-		search_bst(root->lchild, root, data, last);
+		return  search_bst(root->lchild, root, data, last);
 	}
 	else
 	{
@@ -663,11 +663,12 @@ int main()
 	printf("\n");
 	
 	printf("create bst from list\n");
-    for (i = 0; i < 11; i++) {
-        add_node_to_tail(&list, cdata[i]);
-    }
+	for (i = 0; i < 11; i++)
+	 {
+		add_node_to_tail(&list, cdata[i]);
+	}
 	t = create_bst_from_list(&list, 0, 10);
-    in_order_recursive(t);
+	in_order_recursive(t);
 	printf("\n");
 	return 0;
 }
