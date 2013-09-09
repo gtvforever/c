@@ -44,12 +44,12 @@ bool reverse_int(int* str, unsigned int begin, unsigned int end)
 	if(str == NULL || begin >= end)
 		return false;
 
-	len = end - begin + 1;
-	for(i = 0; i < len/2; i++)
+	len = end - begin;
+	for(i = 0; i <= len/2; i++)
 	{
 		tmp = str[i + begin];
-		str[begin + i] = str[begin + len - 1 - i];
-		str[begin + len - 1 - i] = tmp;
+		str[begin + i] = str[begin + len - i];
+		str[begin + len - i] = tmp;
 	}
 	
 	return true;
