@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAY_SIZE  (1024*10)
+#define ARRAY_SIZE  (10)
 
 void print_list(unsigned int* data, unsigned int len)
 {
@@ -13,7 +13,7 @@ void print_list(unsigned int* data, unsigned int len)
 	}
 }
 
-static void swap(unsigned int *data,  int low,  int high)
+static void swap(unsigned int *data,  unsigned int low, unsigned int high)
 {
 	unsigned int temp = data[low];
 	data[low] = data[high];
@@ -39,12 +39,30 @@ static unsigned int get_pivot(unsigned int* data,  int low,  int high)
 	return low;
 }
 
+
+static get_pivot_2(unsigned int* data, unsigned int low, unsigned int high)
+{
+	int i = low - 1;
+	int j;
+
+
+	for (j = low; j < high ; ++j)
+	{
+		if(data[j] < data[high])
+		{
+			swap(data, ++i, j);
+		}
+	}
+	swap(data, ++i, high);
+	return i;
+
+}
 static void quick_sort(unsigned int* data,  int low,  int high)
 {
 	unsigned int key;
 	if (low < high)
 	{
-		key = get_pivot(data, low, high);
+		key = get_pivot_2(data, low, high);
 		quick_sort(data, low, key - 1);
 		quick_sort(data, key + 1, high);
 	}
@@ -62,9 +80,9 @@ int main()
 		data[i] = rand();
 	}
 
-	/* print_list(data, ARRAY_SIZE); */
+	print_list(data, ARRAY_SIZE);
 	quick_sort(data,0, ARRAY_SIZE - 1);
 	printf("----------After quick sort-----------\n");
-	/* print_list(data, ARRAY_SIZE); */
+	print_list(data, ARRAY_SIZE);
 	return 0;
 }
