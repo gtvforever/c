@@ -259,29 +259,22 @@ static int list_have_circle(struct ListNode* head)
 {
     struct ListNode* fast, *slow;
     
-    if (head == NULL || head->next == NULL) {
+    if (head == NULL) {
         return -1;
     }
     
-    fast = head->next->next;
+    fast = head;
     slow = head;
     
-    while (slow != NULL && fast != NULL && slow != fast) {
-        fast = fast->next;
-        if (fast->next) {
-            fast = fast->next;
-        }
-        else
-        {
-            return 0;
-        }
-        slow = slow->next;
-    }
+    while(fast != NULL && fast->next != NULL)
+    {
+    	fast = fast->next->next;
+    	slow = slow->next;
 
-	if(slow == fast)
-		return 1;
-	else
-		return 0;
+    	if(fast == slow)
+    		return 0;
+    }
+    return 1;
 }
 
 
@@ -632,14 +625,14 @@ int main()
     int i;
     struct ListNode* head = NULL;
     struct ListNode* head_1, *head_2, *head_3;
- /*    for (i = 0; i < 8; i++) {                   */
- /*        add_node_to_tail(&head, i);             */
- /*    }                                           */
- /*    print_list(head);                           */
- /*    reverse_print_list(head);                   */
- /*    i = list_have_circle(head);                 */
- /*    printf("i result is %d\n", i);              */
- /*    set_list_into_circle(head, 4);              */
+	for (i = 0; i < 8; i++) {
+		add_node_to_tail(&head, i);
+	}
+	print_list(head);
+	reverse_print_list(head);
+	set_list_into_circle(head, 4);
+	i = list_have_circle(head);
+	printf("i result is %d\n", i);
  /*    i = get_circlr_length(head);                */
  /* //   print_list(head);                         */
  /*    printf("get_circlr_length is %d\n", i);     */
@@ -648,20 +641,20 @@ int main()
  /*    del_list(&head);                            */
  /*    print_list(head);                           */
     
-    int data[10] = {1,2,3,4,5,6,7,8,9,10};
-    for (i = 0,head_1 = NULL; i < 10; i+=2) {
-        add_node_to_tail(&head_1, data[i]);
-    }
+	/* int data[10] = {1,2,3,4,5,6,7,8,9,10};     */
+	/* for (i = 0,head_1 = NULL; i < 10; i+=2) {  */
+	/*     add_node_to_tail(&head_1, data[i]);    */
+	/* }                                          */
 
-    print_list(head_1);
-    
-	for (i = 1, head_2 = NULL; i < 10; i+=2) {
-        add_node_to_tail(&head_2, data[i]);
-    }
-    print_list(head_2);
-    
-	head_3 = list_merge_1(head_1, head_2);
-    print_list(head_3);
+	/* print_list(head_1);                        */
+	/*                                            */
+	/* for (i = 1, head_2 = NULL; i < 10; i+=2) { */
+	/*     add_node_to_tail(&head_2, data[i]);    */
+	/* }                                          */
+	/* print_list(head_2);                        */
+	/*                                            */
+	/* head_3 = list_merge_1(head_1, head_2);     */
+	/* print_list(head_3);                        */
     /* connect_2_list(head_1, head_2); */
     /* printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2)); */
 }
