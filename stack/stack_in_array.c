@@ -7,6 +7,13 @@
 
 typedef unsigned int DATATYPE;
 
+typedef enum 
+{
+	false,
+	true,
+}bool;
+
+
 typedef struct _stack
 {
 	DATATYPE array[STACK_SIZE];
@@ -14,34 +21,57 @@ typedef struct _stack
 }STACK;
 
 
-int push(STACK* s, DATATYPE data)
+bool push(STACK* s, DATATYPE data)
 {
-	if (s->top == STACK_SIZE -1)
+	if (s->top == STACK_SIZE - 1)
 	{
-		return -1;
+		return false;
 	}
 
 	s->array[++s->top] = data;
 
-	return 0;
+	return true;
 }
 
-int pop(STACK * s, DATATYPE* out)
+
+bool pop(STACK * s, DATATYPE* out)
 {
-	if(s == NULL || s->top == -1)
+	if(s == NULL || s->top == false)
 	{
-		return  -1;
+		return false;
 	}
 
 	*out = s->array[s->top--];
 
-	return 0;
+	return true;
 }	
+
+
+
+bool stack_is_empty(STACK* s)
+{
+	if(s == NULL)
+		return false;
+
+	return s->top == -1?:true:false;
+}
+
+
+bool stack_top(STACK* s, DATATYPE* out)
+{
+	if(s == NULL || s->top == -1)
+		return false;
+
+	*out = s->data[s->top];
+	return true;
+}
+
 
 void init_stack(STACK* s)
 {
 	s->top = -1;
 }
+
 
 int main()
 {
@@ -51,7 +81,7 @@ int main()
 
 	init_stack(&s);
 
-	for (i =0 ; i < STACK_SIZE; i++)
+	for (i = 0 ; i < STACK_SIZE; i++)
 	{
 		r = rand();
 		printf("%d\n", r);
