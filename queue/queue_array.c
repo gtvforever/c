@@ -11,16 +11,24 @@ typedef struct _queue_array
 }QUEUE;
 
 
-int queue_init(QUEUE* q)
+typedef enum 
+{
+	false,
+	true,
+}bool;
+
+
+bool queue_init(QUEUE* q)
 {
 	if (q == NULL)
-		return -1;
+		return false;
 
 	q->front = 0;
 	q->rear = 0;
 
-	return 0;	
+	return true;	
 }
+
 
 int get_queue_length(QUEUE* q)
 {
@@ -31,38 +39,50 @@ int get_queue_length(QUEUE* q)
 }
 
 
-int en_queue(QUEUE* q, ElementType e)
+bool en_queue(QUEUE* q, ElementType e)
 {
 	if (q == NULL)
-		return -1;
+		return false;
 
 	if ((q->rear + 1)%QUEUE_SIZE == q->front)
 	{
 		printf("queue is full\n");
-		return -1;
+		return false;
 	}
 
 	q->data[q->rear] = e;
 	q->rear = (q->rear + 1)%QUEUE_SIZE;
 
-	return 0;
+	return true;
 }
 
 
 int de_queue(QUEUE* q, ElementType * e)
 {
 	if (q == NULL)
-		return -1;
+		return false;
+
 	if (q->rear == q->front)
 	{
-		printf("queue is null\n");
+		printf("queue is empty\n");
+		return false;
 	}
 
 	*e = q->data[q->front];
 	q->front = (q->front + 1)%QUEUE_SIZE;
 
-	return 0;
+	return true;
 }
+
+
+bool queue_is_empty(QUEUE* q)
+{
+	if(q == NULL)
+		return false;
+
+	return q->rear == q->front?true:false;
+}
+
 
 int main()
 {
