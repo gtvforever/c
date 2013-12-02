@@ -23,19 +23,19 @@ void myswap(unsigned int* data, unsigned int i, unsigned int j)
 unsigned int get_pivot_2(unsigned int* data, unsigned int begin, unsigned int end)
 {
 
-int i = begin - 1;
-int j;
+    int i = begin - 1;
+    int j;
 
-for(j = begin; j < end; ++j)
-{
-if(data[j] < data[end])
-{
-myswap(data, ++i, j);
-}
-}
-myswap(data, ++i, end);
+    for(j = begin; j < end; ++j)
+    {
+        if(data[j] < data[end])
+        {
+            myswap(data, ++i, j);
+        }
+    }
+    myswap(data, ++i, end);
 
-return i;
+    return i;
 
 }
 
