@@ -35,8 +35,8 @@ static void shell_sort(unsigned int* data, int len)
 			if (data[i] < data[i - step])
 			{
 				temp = data[i];
-
-				for (j = i - step; j >= 0 && data[j] > temp; j -= step)
+				j = i - step;
+				for (; j >= 0 && data[j] > temp; j -= step)
 				{
 					data[j + step] = data[j];	
 				}	
