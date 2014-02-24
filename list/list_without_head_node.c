@@ -26,27 +26,27 @@ static unsigned int get_list_length(struct ListNode* head)
         length++;
         p = p->next;
     }
- 
- 	return length;
+
+    return length;
 }
 
 static void add_node_to_head(struct ListNode** head, ListType value)
 {
     struct ListNode* p = *head;
-    struct ListNode* new;
- 
-    new  = (struct ListNode*)malloc(sizeof(struct ListNode));
-    new->data = value;
+    struct ListNode* new_node;
+
+    new_node  = (struct ListNode*)malloc(sizeof(struct ListNode));
+    new_node->data = value;
     
     if (p == NULL) {
         /* printf("head is null\n"); */
-        new->next = NULL;
+        new_node->next = NULL;
     }
     else
     {
-        new->next = p;
+        new_node->next = p;
     }
-    *head = new;
+    *head = new_node;
     
     return;
 }
@@ -54,17 +54,18 @@ static void add_node_to_head(struct ListNode** head, ListType value)
 static void add_node_to_tail(struct ListNode** head, ListType value)
 {
     struct ListNode* p = *head;
-    struct ListNode* new;
+    struct ListNode* new_node;
     
-    new = (struct ListNode*)malloc(sizeof(struct ListNode));
-    if (new == NULL) {
+    new_node = (struct ListNode*)malloc(sizeof(struct ListNode));
+    if (new_node == NULL)
+    {
         printf("malloc failed\n");
     }
-    new->data = value;
-    new->next = NULL;
+    new_node->data = value;
+    new_node->next = NULL;
     
     if (p == NULL) {
-        *head = new;
+        *head = new_node;
         return;
     }
     else
@@ -72,7 +73,7 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
         while (p->next != NULL) {
             p = p->next;
         }
-        p->next = new;
+        p->next = new_node;
     }
     
     return;
@@ -86,12 +87,15 @@ static void reverse_list_recursive_2(NODE* head, NODE** new_head)
 	{
 		return;
 	}
+
 	if(head->next == NULL)
 	{
 		*new_head = head;
 		return;
 	}
+
 	reverse_list_recursive_2(head->next, new_head);
+
 	head->next->next = head;
 	head->next = NULL;
 
@@ -101,7 +105,9 @@ static void reverse_list_recursive_2(NODE* head, NODE** new_head)
 static struct ListNode* reverse_list_recursive(struct ListNode* head)
 {
     if(head == NULL || head->next == NULL)
+    {
         return head;
+    }
     else
     {
         struct ListNode* r;
@@ -112,13 +118,15 @@ static struct ListNode* reverse_list_recursive(struct ListNode* head)
     }
 }
 
+
 static int reverse_list(struct ListNode** head)
 {
     struct ListNode* p = *head;
     struct ListNode* q;
     struct ListNode* r;
     
-    if (p == NULL || p->next == NULL) {
+    if (p == NULL || p->next == NULL)
+    {
         return -1;
     }
     
@@ -140,7 +148,6 @@ static int reverse_list(struct ListNode** head)
 }
 
 
-
 static NODE* reverse_list_non_recursive(NODE* head)
 {
 	NODE* last;
@@ -148,10 +155,14 @@ static NODE* reverse_list_non_recursive(NODE* head)
 	NODE* tmp;
 	
 	if(head == NULL)
+    {
 		return NULL;
+    }
 	
 	if(head->next == NULL)
+    {
 		return head;
+    }
 
 	last = head;
 	
@@ -169,6 +180,7 @@ static NODE* reverse_list_non_recursive(NODE* head)
 
 	return last;
 }
+
 
 static struct ListNode* get_mid_node(struct ListNode* head)
 {
@@ -221,12 +233,12 @@ static void reverse_print_list(struct ListNode* head)
     reverse_print_list(head->next);
 
     printf("%d\n", head->data);
-    
 }
+
 
 static void set_list_into_circle(struct ListNode* head, unsigned int count)
 {
-    
+
     struct ListNode* start;
     struct ListNode* end;
     if (head == NULL || head->next == NULL) {
@@ -276,7 +288,6 @@ static int list_have_circle(struct ListNode* head)
     }
     return 1;
 }
-
 
 
 //get inner circle length
@@ -331,6 +342,7 @@ static unsigned int get_pre_circle_length(struct ListNode* head)
     return pre_circle_len;
 }
 
+
 static void del_list(struct ListNode** head)
 {
     struct ListNode * p = *head;
@@ -339,6 +351,7 @@ static void del_list(struct ListNode** head)
     unsigned int pre_circle_length;
     unsigned int circle_length;
     unsigned int loop = 0;
+
     if (p == NULL) {
         return;
     }
@@ -352,7 +365,7 @@ static void del_list(struct ListNode** head)
             q = q->next;
             loop--;
         }
- 
+
         for (; circle_length > 0; circle_length--) {
             r = q->next;
             free(q);
@@ -373,10 +386,11 @@ static void del_list(struct ListNode** head)
             free(p);
             p = q;
         }
- 
+
     }
     *head = NULL;
 }
+
 
 static int check_two_list_connect(struct ListNode* head_1, struct ListNode* head_2)
 {
@@ -398,15 +412,16 @@ static int check_two_list_connect(struct ListNode* head_1, struct ListNode* head
 	}
 	
 	if (head_1 == head_2) {
-	
+
 		return 1;
-	
+
 	} else {
-	
+
 		return 0;
 	}
 
 }
+
 
 static unsigned int get_2_list_meet_pos(struct ListNode* head_1, struct ListNode* head_2)
 {
@@ -461,7 +476,6 @@ static unsigned int get_2_list_meet_pos(struct ListNode* head_1, struct ListNode
 
 	return i;
 }
-
 
 
 static void connect_2_list(struct ListNode* head_1, struct ListNode* head_2)
@@ -569,10 +583,14 @@ static NODE* list_merge(NODE* p1, NODE* p2)
 	NODE* ret;
 
 	if (p1 == NULL)
+    {
 		return p2;
+    }
 	
 	if (p2 == NULL)
+    {
 		return p1;
+    }
 
 	if (p1->data < p2->data)
 	{
@@ -594,7 +612,9 @@ static NODE* get_kth_node(NODE* head, unsigned int k)
 {
 	NODE* p, *q;
 	if (head == NULL || k < 1)
+    {
 		return NULL;
+    }
 	
 	p  = q = head;
 
@@ -625,14 +645,14 @@ int main()
     int i;
     struct ListNode* head = NULL;
     struct ListNode* head_1, *head_2, *head_3;
-	for (i = 0; i < 8; i++) {
-		add_node_to_tail(&head, i);
-	}
-	print_list(head);
-	reverse_print_list(head);
-	set_list_into_circle(head, 4);
-	i = list_have_circle(head);
-	printf("i result is %d\n", i);
+    for (i = 0; i < 8; i++) {
+      add_node_to_tail(&head, i);
+  }
+  print_list(head);
+  reverse_print_list(head);
+  set_list_into_circle(head, 4);
+  i = list_have_circle(head);
+  printf("i result is %d\n", i);
  /*    i = get_circlr_length(head);                */
  /* //   print_list(head);                         */
  /*    printf("get_circlr_length is %d\n", i);     */
@@ -640,7 +660,7 @@ int main()
  /*    printf("get_pre_circle_length is %d\n", i); */
  /*    del_list(&head);                            */
  /*    print_list(head);                           */
-    
+
 	/* int data[10] = {1,2,3,4,5,6,7,8,9,10};     */
 	/* for (i = 0,head_1 = NULL; i < 10; i+=2) {  */
 	/*     add_node_to_tail(&head_1, data[i]);    */
@@ -658,5 +678,3 @@ int main()
     /* connect_2_list(head_1, head_2); */
     /* printf("meet pos is %d\n",get_2_list_meet_pos(head_1, head_2)); */
 }
-
-
