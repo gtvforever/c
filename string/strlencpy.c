@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
 char* my_memcpy(char* dst, const char* src,  unsigned int len)
 {
 	char* addr = dst;
@@ -13,7 +11,6 @@ char* my_memcpy(char* dst, const char* src,  unsigned int len)
 
 	if ( dst <= src || (src + len) <= dst)
 	{
-		printf("16\n");
 		for (i = 0; i < len; i++)
 		{
 			dst[i] = src[i];
@@ -45,6 +42,7 @@ char* my_strcpy_1(char* dst, const char* src)
 	return addr;
 }
 
+
 void my_strcpy_2(char* dst, const char* src)
 {
 	char* addr = dst;
@@ -56,6 +54,7 @@ void my_strcpy_2(char* dst, const char* src)
 
 	return addr;
 }
+
 
 int my_strlen_1(const char* str)
 {
@@ -70,6 +69,7 @@ int my_strlen_1(const char* str)
 	return len;
 }
 
+
 int my_strlen_2(const char* str)
 {
 	if (str == NULL || *str == '\0')
@@ -81,6 +81,8 @@ int my_strlen_2(const char* str)
 		return my_strlen_2(str + 1) + 1;
 	}
 }
+
+
 int main()
 {
 	unsigned int i;
