@@ -18,6 +18,7 @@ void print_list(unsigned int * data, unsigned int len)
 	return;
 }
 
+
 void swap(unsigned int* data, int src, int dst)
 {
 	unsigned int temp = data[src];
@@ -28,9 +29,11 @@ void swap(unsigned int* data, int src, int dst)
 	return;
 
 }
-void heap_adjust(unsigned int* data, int start, int length)
+
+
+void heap_adjust(unsigned int* data, unsigned int start, unsigned int length)
 {
-	int i;
+	unsigned int i;
 	unsigned int temp = data[start];
 
 
@@ -49,9 +52,15 @@ void heap_adjust(unsigned int* data, int start, int length)
 	data[start] = temp;
 }
 
-int heap_sort(unsigned int* data, int length)
+
+int heap_sort(unsigned int* data, unsigned int length)
 {
-	int i;
+	unsigned int i;
+
+	if(data == NULL || length < 2)
+	{
+		return -1;
+	}
 
 	for(i = length/2; i > 0; i--)
 	{
@@ -64,7 +73,10 @@ int heap_sort(unsigned int* data, int length)
 		heap_adjust(data, 1, i - 1);
 	}
 
+	return 0;
 }
+
+
 int main()
 {
 	unsigned int* data = (unsigned int*)malloc(sizeof(unsigned int)*(ARRAY_SIZE + 1));
@@ -72,7 +84,7 @@ int main()
 	if(data == NULL)
 	{
 		printf("malloc failed\n");
-		return 0;
+		return -1;
 	}
 
 	for (i = 1; i < ARRAY_SIZE + 1; i++)
@@ -80,10 +92,10 @@ int main()
 		data[i] = rand();
 	}
 
-	/* print_list(data + 1, ARRAY_SIZE); */
+	// print_list(data + 1, ARRAY_SIZE); 
 	heap_sort(data, ARRAY_SIZE);
 	printf("-------After Heap Sort--------\n");
-	/* print_list(data + 1, ARRAY_SIZE); */
+	// print_list(data + 1, ARRAY_SIZE); 
 
 	free(data);
 

@@ -19,11 +19,11 @@ void print_list(unsigned int * data, unsigned int len)
 
 static void merge(unsigned int* src, unsigned int* temp, int s, int m, int n)
 {
-	int i =s;
+	int i = s;
 	int j = m + 1;
 	int k = 0;
 
-	while( i <= m && j <= n)
+	while(i <= m && j <= n)
 	{
 		if (src[i] <= src[j])
 			temp[k++] = src[i++];
@@ -37,7 +37,7 @@ static void merge(unsigned int* src, unsigned int* temp, int s, int m, int n)
 	while(j <= n)
 		temp[k++] = src[j++];
 
-	for(i = 0 ;i < k; i++)
+	for(i = 0; i < k; i++)
 	{
 		src[s + i] = temp[i];
 	}
@@ -52,7 +52,7 @@ static void merge_sort(unsigned int* origin, unsigned int* temp, int begin, int 
 		middle = (begin + end)/2;
 		merge_sort(origin, temp, begin, middle);
 		merge_sort(origin, temp, middle + 1, end);
-		merge(origin,temp ,begin, middle, end);
+		merge(origin, temp, begin, middle, end);
 	}
 }
 
@@ -65,7 +65,7 @@ int main()
 	if(data == NULL || temp == NULL)
 	{
 		printf("malloc failed\n");
-		return 0;
+		return -1;
 	}
 
 	for (i = 0; i < ARRAY_SIZE ; i++)
