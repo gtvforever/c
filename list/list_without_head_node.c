@@ -66,7 +66,6 @@ static void add_node_to_tail(struct ListNode** head, ListType value)
     
     if (p == NULL) {
         *head = new_node;
-        return;
     }
     else
     {
@@ -218,7 +217,6 @@ static void print_list(struct ListNode* head)
         printf("%d\n", p->data);
         p = p->next;
     }
-    
     
 }
 
@@ -580,63 +578,63 @@ static NODE* list_merge_1(NODE* head_1, NODE* head_2)
 
 static NODE* list_merge(NODE* p1, NODE* p2)
 {
-	NODE* ret;
+    NODE* ret;
 
-	if (p1 == NULL)
+    if (p1 == NULL)
     {
-		return p2;
-    }
-	
-	if (p2 == NULL)
-    {
-		return p1;
+        return p2;
     }
 
-	if (p1->data < p2->data)
-	{
-		ret = p1;
-		ret->next = list_merge(p1->next, p2);
-	}
-	else
-	{
-		ret = p2;
-		ret->next = list_merge(p1, p2->next);
-	}
+    if (p2 == NULL)
+    {
+        return p1;
+    }
 
-	return ret;
+    if (p1->data < p2->data)
+    {
+        ret = p1;
+        ret->next = list_merge(p1->next, p2);
+    }
+    else
+    {
+        ret = p2;
+        ret->next = list_merge(p1, p2->next);
+    }
+
+    return ret;
 
 }
 
 
 static NODE* get_kth_node(NODE* head, unsigned int k)
 {
-	NODE* p, *q;
-	if (head == NULL || k < 1)
+    NODE* p, *q;
+    if (head == NULL || k < 1)
     {
-		return NULL;
+    	return NULL;
     }
-	
-	p  = q = head;
 
-	while(p && k > 0)
-	{
-		p = p->next;
-		k--;
-	}
-	
-	if(p != NULL)
-	{
-		while(p != NULL)
-		{
-			p = p->next;
-			q = q->next;
-		}
-		return q;
-	}
-	else
-	{
-		return NULL;
-	}	
+    p = q = head;
+
+    while(p && k > 0)
+    {
+    	p = p->next;
+    	k--;
+    }
+
+    if(p != NULL)
+    {
+        while(p != NULL)
+        {
+            p = p->next;
+            q = q->next;
+        }
+        return q;
+    }
+    else
+    {
+        return NULL;
+    }
 
 }
 
