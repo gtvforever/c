@@ -152,21 +152,16 @@ static NODE* reverse_list_non_recursive(NODE* head)
 	NODE* last;
 	NODE* cur;
 	NODE* tmp;
-	
-	if(head == NULL)
-    {
-		return NULL;
-    }
-	
-	if(head->next == NULL)
-    {
+
+	if(head == NULL || head->next == NULL)
+	{
 		return head;
-    }
+	}
 
 	last = head;
-	
+
 	cur = head->next;
-	
+
 	last->next = NULL;
 
 	while(cur != NULL)
