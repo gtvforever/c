@@ -1,13 +1,6 @@
-//
-//  list_without_head_node.c
-//  xcodestudy
-//
-//  Created by guoming on 13-3-2.
-//  Copyright (c) 2013年 guoming. All rights reserved.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef unsigned int ListType;
 
 typedef struct ListNode
@@ -307,23 +300,29 @@ static unsigned int get_circlr_length(struct ListNode* head)
 
 static unsigned int get_pre_circle_length(struct ListNode* head)
 {
-    struct ListNode *p, *q;
+    struct ListNode *fast, *slow;
     unsigned int circle_len;
     unsigned int pre_circle_len;
+
     circle_len = get_circlr_length(head);
     
     if (circle_len == 0) {
         return 0;
     }
     
-    for (p = head; circle_len > 0; circle_len--) {
-        p = p->next;
+    fast = slow = head;
+
+    while(circle_len-- > 0)
+    {
+    	fast = fast->next;
     }
-    
-    
-    for (pre_circle_len = 0, q = head; p != q; pre_circle_len++) {
-        p = p->next;
-        q = q->next;
+
+    pre_circle_len = 0
+    while( fast != slow)
+    {
+    	pre_circle_len++;
+        fast = fast->next;
+        slow = slow->next;
     }
     
     return pre_circle_len;
