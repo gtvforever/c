@@ -1,36 +1,35 @@
 #include <string.h>
-
+#include <stdio.h>
 
 static int first_not_repeat_char(const char* str)
 {
 	int table[256] = {0};
 	unsigned int i;
 	unsigned int key;
-	unsigned long value;
 
 	if(str == NULL)
 		return -1;
 
 	for(i = 0; i < strlen(str); i++)
 	{
-		value = str[i];
-		key = *(int*)(&value);
-        table[key] += 1;
+		key = str[i];
+		table[key] += 1;
 
 	}
 
-	i = -1;  //default return value, -1 means error.
+	i = -1;  //default return value, -1 means we didn't find a char which appear only one time.
     
 	for (i = 0; i < 256; i++)
-    {
-        if(table[i] == 1)
-            break;
-    }
+	{
+		if(table[i] == 1)
+			break;
+	}
  
 	return i;	
 }
 
-int first_not_repeat_demo()
+
+int main()
 {
 	int value = -1;
 
