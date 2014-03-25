@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE (1024)
+#define SIZE (10)
 typedef enum 
 {
 	false,
@@ -45,7 +45,6 @@ unsigned int get_pivot_2(unsigned int* data, unsigned int begin, unsigned int en
 
 	int i = begin - 1;
 	int j;
-
 	for(j = begin; j < end; ++j)
 	{
 		if(data[j] < data[end])
@@ -72,44 +71,28 @@ void quick_sort(unsigned int* data,  int begin,  int end)
 }
 
 
-bool find_min_kth_num(unsigned int* data, unsigned int begin, unsigned int end, unsigned int k)
-{
-	unsigned int pivot;
-	if(begin > end)
-		return false;
-	if(k > end)
-		return false;
-
-	pivot = get_pivot_2(data, begin, end);
-	if(pivot == k)
-		return true;
-
-
-	else if(pivot < k)
-	{
-		return find_min_kth_num(data, pivot + 1, end, k - pivot - 1);
-	}
-	else
-	{
-		return find_min_kth_num(data, begin, pivot - 1, k);
-	}
-}
-
-
-int find_kth_num(unsigned int* data, unsigned int begin,  unsigned int end, unsigned int k)
+int find_kth_num(unsigned int* data, unsigned int begin, unsigned int end, unsigned int k)
 {
 	unsigned int pos;
 	if(data == NULL || begin > end || k > end)
+	{
 		return -1;
+	}
+	
 	pos = get_pivot_2(data, begin, end);
+	
 	if(pos == k)
 	{
 		return pos;
 	}
-	else if(pos <  k)
-		return find_kth_num(data, pos, end, k - pos);
+	else if(pos < k)
+	{
+		return find_kth_num(data, pos , end, k - pos);
+	}
 	else
-		return find_kth_num(data,  0, pos - 1, k);
+	{
+		return find_kth_num(data, begin, pos - 1, k);
+	}
 }
 
 
@@ -125,22 +108,22 @@ void plist(unsigned int * data, unsigned int len)
 int main()
 {
 	unsigned int i;
-	unsigned int * data, *back;
+	unsigned int * data;
 	unsigned int k = 3;
 	data = (unsigned int*)malloc(sizeof(unsigned int)*SIZE);
-	back = (unsigned int*)malloc(sizeof(unsigned int)*SIZE);
 
 	for(i = 0; i < SIZE; i++)
 	{
 		data[i] = rand();
-		back[i] = data[i];
 	}
-	// plist(data, SIZE);
-	quick_sort(back, 0, SIZE - 1);
-	printf(">>>>After sort, the kth one is\n");
-	plist(back, k + 1);
-	i = find_kth_num(data,  0, SIZE- 1, k);
-	printf(">>>>>>find minimal %d num is: %d\n", k, data[i]);
+	plist(data, SIZE);
+	// quick_sort(back, 0, SIZE - 1);
+	// printf(">>>>After sort, the kth one is\n");
+	i = find_kth_num(data, 0, SIZE - 1, k);
+	printf(">>>>>>find the %dth num is: %d\n", k, data[i]);
+	plist(data, SIZE);
+	free(data);
 
+	return 0;
 
 }
