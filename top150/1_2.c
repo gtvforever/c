@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 
-void revers_c_style_string(char* str)
+void reverse_c_style_string(char* str)
 {
     unsigned int i,mid;
     unsigned int str_len;
@@ -33,7 +33,7 @@ int main()
 {
     char test[7] = "abcde";
 
-    revers_c_style_string(test);
+    reverse_c_style_string(test);
     printf("%s\n", test + 1);
     return 0;
 }
