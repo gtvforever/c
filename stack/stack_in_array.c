@@ -17,7 +17,7 @@ typedef enum
 typedef struct _stack
 {
 	DATATYPE array[STACK_SIZE];
-	unsigned int top;
+	int top;
 }STACK;
 
 
